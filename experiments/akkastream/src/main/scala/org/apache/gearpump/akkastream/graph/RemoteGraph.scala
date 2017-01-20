@@ -7,7 +7,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -79,7 +79,7 @@ object RemoteGraph {
       val materializer = new RemoteMaterializerImpl(graph, system)
       val (app, matValues) = materializer.materialize
 
-      val appId = context.submit(app)
+      val appId = context.submit(app).appId
       // scalastyle:off println
       println("sleep 5 second until the application is ready on cluster")
       // scalastyle:on println
