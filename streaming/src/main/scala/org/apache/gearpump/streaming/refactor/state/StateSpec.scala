@@ -15,15 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.gearpump.streaming.refactor.dsl.window.impl
 
-import org.apache.gearpump.Message
-import org.apache.gearpump.streaming.dsl.window.api.Trigger
+package org.apache.gearpump.streaming.refactor.state
 
-trait ReduceFnRunner {
+import org.apache.gearpump.streaming.refactor.coder.Coder
+import org.apache.gearpump.streaming.refactor.state.api.State
 
-  def process(message: Message): Unit
+trait StateSpec[StateT <: State] extends Serializable {
 
-  def onTrigger(trigger: Trigger): Unit
+  def bind(id: String, binder: StateBinder): StateT
+
+  def offerCoders(coders: Array[Coder[StateT]]): Unit
+
+  def finishSpecifying: Unit
 
 }

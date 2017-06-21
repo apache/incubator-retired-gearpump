@@ -19,7 +19,6 @@
 package org.apache.gearpump.streaming.refactor.coder;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.CountingOutputStream;
 
@@ -130,5 +129,4 @@ public abstract class Coder<T> implements Serializable {
                     coder, Joiner.on("%n  ").join(reasons));
         }
     }
-
 }

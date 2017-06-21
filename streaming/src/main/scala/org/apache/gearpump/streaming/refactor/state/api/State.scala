@@ -15,15 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.gearpump.streaming.refactor.dsl.window.impl
 
-import org.apache.gearpump.Message
-import org.apache.gearpump.streaming.dsl.window.api.Trigger
+package org.apache.gearpump.streaming.refactor.state.api
 
-trait ReduceFnRunner {
+trait State {
 
-  def process(message: Message): Unit
-
-  def onTrigger(trigger: Trigger): Unit
+  def clear: Unit
 
 }

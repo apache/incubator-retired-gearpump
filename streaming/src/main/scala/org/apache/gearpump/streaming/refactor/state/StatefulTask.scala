@@ -31,16 +31,8 @@ import org.apache.gearpump.streaming.refactor.state.heap.HeapStateInternalsFacto
 import org.apache.gearpump.streaming.state.impl.{CheckpointManager, PersistentStateConfig}
 import org.apache.gearpump.streaming.task.{Task, TaskContext, UpdateCheckpointClock}
 import org.apache.gearpump.streaming.transaction.api.CheckpointStoreFactory
-import org.apache.gearpump.util.LogUtil
 import org.apache.gearpump.{Message, TimeStamp}
 
-<<<<<<< HEAD
-=======
-object StatefulTask {
-  val LOG = LogUtil.getLogger(getClass)
-}
-
->>>>>>> e6ce91c... [Gearpump 311] refactor state management
 abstract class StatefulTask(taskContext: TaskContext, conf: UserConfig)
   extends Task(taskContext, conf) {
 
@@ -60,11 +52,7 @@ abstract class StatefulTask(taskContext: TaskContext, conf: UserConfig)
   // core state data
   var encodedKeyStateMap: Map[String, Table[String, String, Array[Byte]]] = null
 
-<<<<<<< HEAD
   def open(runtimeContext: RuntimeContext): Unit = {}
-=======
-  def open: Unit = {}
->>>>>>> e6ce91c... [Gearpump 311] refactor state management
 
   def invoke(message: Message): Unit
 
