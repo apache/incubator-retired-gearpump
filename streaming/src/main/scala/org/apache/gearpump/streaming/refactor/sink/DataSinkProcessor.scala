@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/sink/DataSinkProcessor.scala
 package org.apache.gearpump.streaming.refactor.sink
 
 import akka.actor.ActorSystem
@@ -33,4 +34,20 @@ object DataSinkProcessor {
     Processor[DataSinkTask](parallelism, description = description,
       taskConf.withValue[DataSink](DataSinkTask.DATA_SINK, dataSink))
   }
+=======
+package org.apache.gearpump.streaming.refactor.state
+
+import org.apache.gearpump.streaming.refactor.state.api.State
+
+trait StateTag[StateT <: State] extends Serializable {
+
+  def appendTo(sb: Appendable)
+
+  def getId: String
+
+  def getSpec: StateSpec[StateT]
+
+  def bind(binder: StateBinder): StateT
+
+>>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateTag.scala
 }

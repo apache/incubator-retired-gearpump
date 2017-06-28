@@ -16,26 +16,33 @@
  * limitations under the License.
  */
 
-package org.apache.gearpump.streaming.refactor.state
+package org.apache.gearpump.streaming.refactor.coder;
 
-import java.time.Instant
+import java.util.Collections;
+import java.util.List;
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
+public abstract class AtomicCoder<T> extends StructuredCoder<T>  {
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
+    @Override
+    public void verifyDeterministic() {}
 
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
+    @Override
+    public List<? extends Coder<?>> getCoderArguments() {
+        return Collections.emptyList();
+    }
 
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
+    @Override
+    public final List<? extends Coder<?>> getComponents() {
+        return Collections.emptyList();
+    }
 
-  def getStartTime: Instant
+    @Override
+    public final boolean equals(Object other) {
+        return other != null && this.getClass().equals(other.getClass());
+    }
 
+    @Override
+    public final int hashCode() {
+        return this.getClass().hashCode();
+    }
 }

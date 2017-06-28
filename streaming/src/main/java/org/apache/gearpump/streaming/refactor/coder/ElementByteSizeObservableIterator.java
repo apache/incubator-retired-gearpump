@@ -16,26 +16,15 @@
  * limitations under the License.
  */
 
-package org.apache.gearpump.streaming.refactor.state
+package org.apache.gearpump.streaming.refactor.coder;
 
-import java.time.Instant
+import java.util.Iterator;
+import java.util.Observable;
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
-
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
-
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
-
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
-
-  def getStartTime: Instant
-
+public abstract class ElementByteSizeObservableIterator<V>
+        extends Observable implements Iterator<V> {
+    protected final void notifyValueReturned(long byteSize) {
+        setChanged();
+        notifyObservers(byteSize);
+    }
 }

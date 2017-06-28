@@ -16,26 +16,24 @@
  * limitations under the License.
  */
 
-package org.apache.gearpump.streaming.refactor.state
+package org.apache.gearpump.streaming.refactor.state.api
 
-import java.time.Instant
+import java.lang.Iterable
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
+trait MapState[K, V] extends State {
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
+  def put(key : K, value : V): Unit
 
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
+  def putIfAbsent(key : K, value : V): ReadableState[V]
 
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
+  def remove(key : K): Unit
 
-  def getStartTime: Instant
+  def get(key : K): ReadableState[V]
+
+  def keys: ReadableState[Iterable[K]]
+
+  def values: ReadableState[Iterable[V]]
+
+  def entries: ReadableState[Iterable[java.util.Map.Entry[K, V]]]
 
 }

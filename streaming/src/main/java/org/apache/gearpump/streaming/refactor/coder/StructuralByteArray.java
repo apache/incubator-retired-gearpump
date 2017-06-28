@@ -16,26 +16,40 @@
  * limitations under the License.
  */
 
-package org.apache.gearpump.streaming.refactor.state
+package org.apache.gearpump.streaming.refactor.coder;
 
-import java.time.Instant
+import com.google.common.io.BaseEncoding;
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
+import java.util.Arrays;
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
+public class StructuralByteArray {
+    byte[] value;
 
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
+    public StructuralByteArray(byte[] value) {
+        this.value = value;
+    }
 
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
+    public byte[] getValue() {
+        return value;
+    }
 
-  def getStartTime: Instant
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof StructuralByteArray) {
+            StructuralByteArray that = (StructuralByteArray) o;
+            return Arrays.equals(this.value, that.value);
+        } else {
+            return false;
+        }
+    }
 
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(value);
+    }
+
+    @Override
+    public String toString() {
+        return "base64:" + BaseEncoding.base64().encode(value);
+    }
 }

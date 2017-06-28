@@ -7,7 +7,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,21 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.gearpump.streaming.refactor.dsl.window.impl
+package org.apache.gearpump.streaming.refactor.coder;
 
-import org.apache.gearpump.Message
-import org.apache.gearpump.streaming.dsl.window.api.Trigger
+public class CoderException extends RuntimeException {
+    public CoderException(String message) {
+        super(message);
+    }
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/dsl/window/impl/ReduceFnRunner.scala
-trait ReduceFnRunner {
+    public CoderException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-  def process(message: Message): Unit
-
-  def onTrigger(trigger: Trigger): Unit
-=======
-trait State {
-
-  def clear: Unit
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/api/State.scala
-
+    public CoderException(Throwable cause) {
+        super(cause);
+    }
 }

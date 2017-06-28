@@ -16,26 +16,16 @@
  * limitations under the License.
  */
 
-package org.apache.gearpump.streaming.refactor.state
+package org.apache.gearpump.streaming.refactor.state.api
 
-import java.time.Instant
+trait CombiningState[InputT, AccumT, OutputT] extends GroupingState[InputT, OutputT] {
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
+  def getAccum: AccumT
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
+  def addAccum(accumT: AccumT)
 
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
+  def mergeAccumulators(accumulators: Iterable[AccumT]): AccumT
 
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
-
-  def getStartTime: Instant
+  def readLater: CombiningState[InputT, AccumT, OutputT]
 
 }

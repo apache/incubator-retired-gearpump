@@ -18,24 +18,44 @@
 
 package org.apache.gearpump.streaming.refactor.state
 
-import java.time.Instant
+import java.util.Objects
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
+object StateNamespaces {
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
+  def global: StateNamespace = {
+    new GlobalNameSpace
+  }
 
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
+  private object NameSpace extends Enumeration {
+    type NameSpace = Value
+    val GLOBAL, WINDOW, WINDOW_AND_TRIGGER = Value
+  }
 
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
+  class GlobalNameSpace extends StateNamespace {
 
-  def getStartTime: Instant
+    private val GLOBAL_STRING: String = "/"
+
+    override def stringKey: String = {
+      GLOBAL_STRING
+    }
+
+    override def appendTo(sb: Appendable): Unit = {
+      sb.append(GLOBAL_STRING)
+    }
+
+    override def getCacheKey: AnyRef = {
+      GLOBAL_STRING
+    }
+
+    override def equals(obj: Any): Boolean = {
+      obj == this || obj.isInstanceOf[GlobalNameSpace]
+    }
+
+    override def hashCode(): Int = {
+      Objects.hash(NameSpace.GLOBAL)
+    }
+  }
+
+  // TODO : implement WindowNamespace & WindowAndTriggerNamespace
 
 }

@@ -16,26 +16,14 @@
  * limitations under the License.
  */
 
-package org.apache.gearpump.streaming.refactor.state
+package org.apache.gearpump.streaming.refactor.state.api
 
-import java.time.Instant
+trait GroupingState[InputT, OutputT] extends ReadableState[OutputT] with State {
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
+  def add(value: InputT): Unit
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
+  def isEmpty: ReadableState[Boolean]
 
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
-
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
-
-  def getStartTime: Instant
+  def readLater: GroupingState[InputT, OutputT]
 
 }

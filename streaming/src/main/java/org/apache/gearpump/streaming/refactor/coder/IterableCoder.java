@@ -16,26 +16,26 @@
  * limitations under the License.
  */
 
-package org.apache.gearpump.streaming.refactor.state
+package org.apache.gearpump.streaming.refactor.coder;
 
-import java.time.Instant
+import java.util.List;
 
-import org.apache.gearpump.streaming.refactor.coder.Coder
-import org.apache.gearpump.streaming.refactor.state.api.StateInternals
+public class IterableCoder<T> extends IterableLikeCoder<T, Iterable<T>> {
 
-<<<<<<< HEAD:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/RuntimeContext.scala
-/**
- *
- */
-trait RuntimeContext {
-=======
-trait StateSpec[StateT <: State] extends Serializable {
+    public static <T> IterableCoder<T> of(Coder<T> elemCoder) {
+        return new IterableCoder<>(elemCoder);
+    }
 
-  def bind(id: String, binder: StateBinder): StateT
->>>>>>> e6ce91c... [Gearpump 311] refactor state management:streaming/src/main/scala/org/apache/gearpump/streaming/refactor/state/StateSpec.scala
+    /////////////////////////////////////////////////////////////////////////////
+    // Internal operations below here.
 
-  def getStateInternals[KT](keyCoder: Coder[KT], key: KT): StateInternals
+    @Override
+    protected final Iterable<T> decodeToIterable(List<T> decodedElements) {
+        return decodedElements;
+    }
 
-  def getStartTime: Instant
+    protected IterableCoder(Coder<T> elemCoder) {
+        super(elemCoder, "Iterable");
+    }
 
 }
